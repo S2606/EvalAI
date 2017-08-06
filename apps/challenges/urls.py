@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'(?P<challenge_pk>[0-9]+)/download_all_submissions_file/(?P<file_type>[A-Za-z]+)/$',
         views.download_all_submissions_file,
         name='download_all_submissions_file'),
-      url(r'challenges/reload_rabbitmq_submission_worker/$',
+    url(r'challenges/reload_rabbitmq_submission_worker/$',
         views.reload_rabbitmq_submission_worker,
         name='reload_rabbitmq_submission_worker'),
 ]
