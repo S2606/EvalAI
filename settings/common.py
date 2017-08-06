@@ -87,7 +87,7 @@ ROOT_URLCONF = 'evalai.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(APPS_DIR)],
+        'DIRS': [APPS_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
