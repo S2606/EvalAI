@@ -31,4 +31,7 @@ urlpatterns = [
     url(r'(?P<challenge_pk>[0-9]+)/challenge_phase/(?P<challenge_phase_pk>[0-9]+)/submissions$',
         views.get_all_submissions_of_challenge,
         name='get_all_submissions_of_challenge'),
+    url(r'challenges/reload_rabbitmq_submission_worker/$',
+        views.reload_rabbitmq_submission_worker,
+        name='reload_rabbitmq_submission_worker'),
 ]

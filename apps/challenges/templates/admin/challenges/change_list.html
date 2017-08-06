@@ -1,0 +1,9 @@
+{% extends "admin/change_list.html" %}
+{% block object-tools-items %}
+	{% include "admin/import_export/change_list_import_item.html" %}
+    {% include "admin/import_export/change_list_export_item.html" %}
+    <li>
+	    <a href="{% url 'challenges:reload_rabbitmq_submission_worker' %}"> Reload RabbitMQ Worker </a>
+    </li>
+	{{block.super}}
+{% endblock %}

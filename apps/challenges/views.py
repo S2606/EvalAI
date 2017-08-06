@@ -3,6 +3,7 @@ import random
 import requests
 import shutil
 import string
+import subprocess
 import tempfile
 import yaml
 import zipfile
@@ -11,6 +12,7 @@ from os.path import basename, isfile, join
 
 from django.core.files.base import ContentFile
 from django.db import transaction
+from django.shortcuts import render
 from django.utils import timezone
 
 from rest_framework import permissions, status
@@ -736,3 +738,11 @@ def get_all_submissions_of_challenge(request, challenge_pk, challenge_phase_pk):
     else:
         response_data = {'error': 'You are neither host nor participant of the challenge!'}
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+
+
+def reload_rabbitmq_submission_worker(request):
+    if request.user.is_superuser:
+        subprocess.call("scripts/workers/restart_rabbitmq_worker.sh", shell=True)
+        return render(request, 'challenges/templates/rabbitmq_reloaded.html')
+    else:
+        return render(request, 'challenges/templates/rabbitmq_not_reloaded.html')
