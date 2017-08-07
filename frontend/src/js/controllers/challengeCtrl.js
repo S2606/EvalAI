@@ -884,8 +884,8 @@
                     vm.stopLoader();
                 }
             };
-
             utilities.sendRequest(parameters);
+        };
 
         vm.changeSubmissionVisibility = function(submission_id) {
             var parameters = {};
@@ -903,6 +903,83 @@
             utilities.sendRequest(parameters);
         };
 
+        vm.showRemainingSubmissions = function() {
+            var parameters = {};
+            vm.remainingSubmissions = {};
+            vm.remainingTime = {};
+            vm.showClock = false;
+            vm.showSubmissionNumbers = false;
+            parameters.url = "jobs/"+ vm.challengeId + "/phases/"+ vm.phaseId + "/remaining_submissions/";
+            parameters.method = 'GET';
+            parameters.token = userKey;
+            parameters.callback = {
+                onSuccess: function(response) {
+                    var status = response.status;
+                    var details = response.data;
+                    if (status === 200) {
+                        if (details.remaining_submissions_today_count > 0) {
+                            vm.remainingSubmissions = details;
+                            vm.showSubmissionNumbers = true;
+                        } else {
+                            vm.message = details;
+                            vm.showClock = true;
+                            vm.countDownTimer = function() {
+                                vm.remainingTime = vm.message.remaining_time;
+                                vm.days = Math.floor(vm.remainingTime/24/60/60);
+                                vm.hoursLeft = Math.floor((vm.remainingTime) - (vm.days*86400));
+                                vm.hours = Math.floor(vm.hoursLeft/3600);
+                                vm.minutesLeft = Math.floor((vm.hoursLeft) - (vm.hours*3600));
+                                vm.minutes = Math.floor(vm.minutesLeft/60);
+                                vm.remainingSeconds = Math.floor(vm.remainingTime % 60);
+                                if (vm.remainingSeconds < 10) {
+                                    vm.remainingSeconds = "0" + vm.remainingSeconds;
+                                }
+                                if (vm.remainingTime === 0) {
+                                    vm.showSubmissionNumbers = true;
+                                }
+                                else {
+                                    vm.remainingSeconds--;
+                                }
+                            };
+                            $interval(function() {
+                                $rootScope.$apply(vm.countDownTimer);
+                                }, 1000);
+                                vm.countDownTimer();
+                        }
+                    }
+                },
+                onError: function() {
+                    vm.stopLoader();
+                    $rootScope.notify("error", "Some error occured. Please try again.");
+                }
+            };
+            utilities.sendRequest(parameters);
+        };
+
+        vm.fileTypes = [{'name': 'csv'}];
+
+        vm.downloadChallengeSubmissions = function() {
+            var parameters = {};
+            parameters.url = "challenges/"+ vm.challengeId + "/download_all_submissions_file/" + vm.fileSelected + "/";
+            parameters.method = "GET";
+            parameters.token = userKey;
+            parameters.callback = {
+                onSuccess: function(response) {
+                    var details = response.data;
+                    var anchor = angular.element('<a/>');
+                    anchor.attr({
+                    href: 'data:attachment/csv;charset=utf-8,' + encodeURI(details),
+                    download: 'all_submissions.csv'
+                    })[0].click();
+                },
+                onError: function(response) {
+                    var details = response.data;
+                    $rootScope.notify('error', details.error);
+                }
+            };
+            utilities.sendRequest(parameters);
+        };
+
         $scope.$on('$destroy', function() {
             vm.stopFetchingSubmissions();
             vm.stopLeaderboard();
@@ -914,7 +991,6 @@
             vm.stopFetchingSubmissions();
             vm.stopLeaderboard();
         });
-    };
-}
+    }
 
 })();
