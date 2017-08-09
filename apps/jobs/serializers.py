@@ -101,3 +101,12 @@ class SubmissionCount(object):
 
 class SubmissionCountSerializer(serializers.Serializer):
     submission_count = serializers.IntegerField()
+
+
+class LastSubmissionTime(object):
+    def __init__(self, last_submission_time):
+        self.last_submission_time = last_submission_time
+
+
+class LastSubmissionTimeSerializer(serializers.Serializer):
+    last_submission_time = serializers.DateTimeField()
