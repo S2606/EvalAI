@@ -182,9 +182,10 @@ class TestAnalyticsUrls(BaseAPITestClass):
                                         'challenge_phase_pk': self.challenge_phase.pk,
                                         'submission_by': 'challenge'})
         self.assertEqual(self.url,
-                         '/api/analytics/challenge/{}/challenge_phase/{}/last_submission/{}'.format(self.challenge.pk,
-                                                                                                    self.challenge_phase.pk,
-                                                                                                    'challenge'))
+                         '/api/analytics/challenge/{}/challenge_phase/'
+                         '{}/last_submission/{}'.format(self.challenge.pk,
+                                                        self.challenge_phase.pk,
+                                                        'challenge'))
         resolver = resolve(self.url)
         self.assertEqual(resolver.view_name, 'analytics:get_last_submission_time')
 
@@ -194,9 +195,10 @@ class TestAnalyticsUrls(BaseAPITestClass):
                                         'challenge_phase_pk': self.challenge_phase.pk,
                                         'submission_by': 'challenge_phase'})
         self.assertEqual(self.url,
-                         '/api/analytics/challenge/{}/challenge_phase/{}/last_submission/{}'.format(self.challenge.pk,
-                                                                                                    self.challenge_phase.pk,
-                                                                                                    'challenge_phase'))
+                         '/api/analytics/challenge/{}/challenge_phase/{}/'
+                         'last_submission/{}'.format(self.challenge.pk,
+                                                     self.challenge_phase.pk,
+                                                     'challenge_phase'))
         resolver = resolve(self.url)
         self.assertEqual(resolver.view_name, 'analytics:get_last_submission_time')
 
@@ -206,9 +208,10 @@ class TestAnalyticsUrls(BaseAPITestClass):
                                         'challenge_phase_pk': self.challenge_phase.pk,
                                         'submission_by': 'participant_team'})
         self.assertEqual(self.url,
-                         '/api/analytics/challenge/{}/challenge_phase/{}/last_submission/{}'.format(self.challenge.pk,
-                                                                                                    self.challenge_phase.pk,
-                                                                                                    'participant_team'))
+                         '/api/analytics/challenge/{}/challenge_phase/{}/'
+                         'last_submission/{}'.format(self.challenge.pk,
+                                                     self.challenge_phase.pk,
+                                                     'participant_team'))
         resolver = resolve(self.url)
         self.assertEqual(resolver.view_name, 'analytics:get_last_submission_time')
 
@@ -218,8 +221,9 @@ class TestAnalyticsUrls(BaseAPITestClass):
                                         'challenge_phase_pk': self.challenge_phase.pk,
                                         'submission_by': 'user'})
         self.assertEqual(self.url,
-                         '/api/analytics/challenge/{}/challenge_phase/{}/last_submission/{}'.format(self.challenge.pk,
-                                                                                                    self.challenge_phase.pk,
-                                                                                                    'user'))
+                         '/api/analytics/challenge/{}/challenge_phase/{}/'
+                         'last_submission/{}'.format(self.challenge.pk,
+                                                     self.challenge_phase.pk,
+                                                     'user'))
         resolver = resolve(self.url)
         self.assertEqual(resolver.view_name, 'analytics:get_last_submission_time')

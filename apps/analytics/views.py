@@ -118,7 +118,7 @@ def get_last_submission_time(request, challenge_pk, challenge_phase_pk, submissi
         last_submitted_at = LastSubmissionTime(last_submitted_at)
         serializer = LastSubmissionTimeSerializer(last_submitted_at)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
     # To get the last submission time by a participant team in a challenge phase.
     elif submission_by == 'participant_team':
         participant_team = get_participant_teams_for_user(user=request.user)

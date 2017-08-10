@@ -278,9 +278,9 @@ class GetLastSubmissionTimeTest(BaseAPITestClass):
 
     def test_get_last_submission_time_when_challenge_does_not_exists(self):
         self.url = reverse_lazy('analytics:get_last_submission_time',
-                        kwargs={'challenge_pk': self.challenge.pk+10,
-                                'challenge_phase_pk': self.challenge_phase.pk,
-                                'submission_by': 'challenge'})
+                                kwargs={'challenge_pk': self.challenge.pk+10,
+                                        'challenge_phase_pk': self.challenge_phase.pk,
+                                        'submission_by': 'challenge'})
         expected = {
             'detail': 'Challenge {} does not exist'.format(self.challenge.pk+10)
             }
@@ -290,9 +290,9 @@ class GetLastSubmissionTimeTest(BaseAPITestClass):
 
     def test_get_last_submission_time_when_challenge_phase_does_not_exists(self):
         self.url = reverse_lazy('analytics:get_last_submission_time',
-                        kwargs={'challenge_pk': self.challenge.pk,
-                                'challenge_phase_pk': self.challenge_phase.pk+10,
-                                'submission_by': 'challenge'})
+                                kwargs={'challenge_pk': self.challenge.pk,
+                                        'challenge_phase_pk': self.challenge_phase.pk+10,
+                                        'submission_by': 'challenge'})
         expected = {
             'detail': 'ChallengePhase {} does not exist'.format(self.challenge_phase.pk+10)
             }
@@ -302,9 +302,9 @@ class GetLastSubmissionTimeTest(BaseAPITestClass):
 
     def test_get_last_submission_time_when_submission_by_is_challenge_phase(self):
         self.url = reverse_lazy('analytics:get_last_submission_time',
-                        kwargs={'challenge_pk': self.challenge.pk,
-                                'challenge_phase_pk': self.challenge_phase.pk,
-                                'submission_by': 'challenge_phase'})
+                                kwargs={'challenge_pk': self.challenge.pk,
+                                        'challenge_phase_pk': self.challenge_phase.pk,
+                                        'submission_by': 'challenge_phase'})
         expected = {
             'last_submission_time': "{0}{1}".format(self.submission.created_at.isoformat(), 'Z').replace("+00:00", "")
             }
@@ -314,9 +314,9 @@ class GetLastSubmissionTimeTest(BaseAPITestClass):
 
     def test_get_last_submission_time_when_submission_by_is_challenge(self):
         self.url = reverse_lazy('analytics:get_last_submission_time',
-                        kwargs={'challenge_pk': self.challenge.pk,
-                                'challenge_phase_pk': self.challenge_phase.pk,
-                                'submission_by': 'challenge'})
+                                kwargs={'challenge_pk': self.challenge.pk,
+                                        'challenge_phase_pk': self.challenge_phase.pk,
+                                        'submission_by': 'challenge'})
         expected = {
             'last_submission_time': "{0}{1}".format(self.submission.created_at.isoformat(), 'Z').replace("+00:00", "")
             }
@@ -326,9 +326,9 @@ class GetLastSubmissionTimeTest(BaseAPITestClass):
 
     def test_get_last_submission_time_when_submission_by_is_user(self):
         self.url = reverse_lazy('analytics:get_last_submission_time',
-                        kwargs={'challenge_pk': self.challenge.pk,
-                                'challenge_phase_pk': self.challenge_phase.pk,
-                                'submission_by': 'user'})
+                                kwargs={'challenge_pk': self.challenge.pk,
+                                        'challenge_phase_pk': self.challenge_phase.pk,
+                                        'submission_by': 'user'})
         expected = {
             'last_submission_time': "{0}{1}".format(self.submission.created_at.isoformat(), 'Z').replace("+00:00", "")
             }
@@ -338,9 +338,9 @@ class GetLastSubmissionTimeTest(BaseAPITestClass):
 
     def test_get_last_submission_time_when_submission_by_is_participant_team_and_participant_team_does_not_exist(self):
         self.url = reverse_lazy('analytics:get_last_submission_time',
-                        kwargs={'challenge_pk': self.challenge.pk,
-                                'challenge_phase_pk': self.challenge_phase.pk,
-                                'submission_by': 'participant_team'})
+                                kwargs={'challenge_pk': self.challenge.pk,
+                                        'challenge_phase_pk': self.challenge_phase.pk,
+                                        'submission_by': 'participant_team'})
         expected = {
             'error': 'Participant team for {} does not exist!'.format(self.user)
             }
@@ -350,9 +350,9 @@ class GetLastSubmissionTimeTest(BaseAPITestClass):
 
     def test_get_last_submission_time_when_submission_by_is_participant_team(self):
         self.url = reverse_lazy('analytics:get_last_submission_time',
-                        kwargs={'challenge_pk': self.challenge.pk,
-                                'challenge_phase_pk': self.challenge_phase.pk,
-                                'submission_by': 'participant_team'})
+                                kwargs={'challenge_pk': self.challenge.pk,
+                                        'challenge_phase_pk': self.challenge_phase.pk,
+                                        'submission_by': 'participant_team'})
         self.client.force_authenticate(user=self.user2)
         expected = {
             'last_submission_time': "{0}{1}".format(self.submission.created_at.isoformat(), 'Z').replace("+00:00", "")
@@ -363,9 +363,9 @@ class GetLastSubmissionTimeTest(BaseAPITestClass):
 
     def test_get_last_submission_time_when_url_is_incorrect(self):
         self.url = reverse_lazy('analytics:get_last_submission_time',
-                        kwargs={'challenge_pk': self.challenge.pk,
-                                'challenge_phase_pk': self.challenge_phase.pk,
-                                'submission_by': 'other'})
+                                kwargs={'challenge_pk': self.challenge.pk,
+                                        'challenge_phase_pk': self.challenge_phase.pk,
+                                        'submission_by': 'other'})
         expected = {
             'error': 'Wrong URL Pattern!'
             }
